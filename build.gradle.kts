@@ -30,6 +30,7 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }
+    compile("io.jsonwebtoken:jjwt:0.9.0")
     testImplementation("org.springframework.security:spring-security-test")
 }
 
