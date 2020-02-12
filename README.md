@@ -22,6 +22,11 @@
  - name
  - username
  - password
+ 
+#### reservation
+ - userId
+ - concertId
+ - seatNumber
 
 ### 어플리케이션 기능 (application layer)
 - 회원가입
