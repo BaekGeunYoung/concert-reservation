@@ -5,5 +5,9 @@ enum class ErrorCode(
         val message: String
 ) {
     AUTHENTICATION_FAILED("AC_001", "authentication failed."),
-    DUPLICATE_USERNAME("AC_002", "username already exists.")
+    DUPLICATE_USERNAME("AC_002", "username already exists."),
+    CONCERT_NOT_FOUND("CO_001", "cannot find concert."),
+    INVALID_SEAT_NUMBER("CO_002", "invalid seat number."),
+    SEAT_ALREADY_TAKEN("CO_003", "the seat is already taken."),
+    RESERVATION_NOT_FOUND("RE_001", "cabbit fubd reservation.")
 }
