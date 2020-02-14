@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController
 class ConcertController(
         @Autowired val getConcertService: GetConcertService
 ) {
-    @GetMapping("/")
+    @GetMapping("")
     fun getConcerts(): ResponseEntity<List<Concert>> {
         val concerts = getConcertService.getConcerts()
         return ResponseEntity(concerts, HttpStatus.OK)
