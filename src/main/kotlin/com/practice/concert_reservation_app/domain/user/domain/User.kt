@@ -15,13 +15,13 @@ data class User(
 
         @Enumerated(EnumType.STRING)
         @ElementCollection(fetch = FetchType.EAGER)
-        var roles: MutableSet<Role>
+        var roles: MutableList<Role>
 ) {
     constructor() : this(
             username = "",
             password = "",
             firstName = "",
             lastName = "",
-            roles = mutableSetOf(Role.USER)
+            roles = mutableListOf(Role.USER)
     )
 }

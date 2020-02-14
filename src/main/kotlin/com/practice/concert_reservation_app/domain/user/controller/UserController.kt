@@ -1,7 +1,7 @@
 package com.practice.concert_reservation_app.domain.user.controller
 
-import com.practice.concert_reservation_app.domain.reservation.application.ReservationService
-import com.practice.concert_reservation_app.domain.user.application.UserMyPageService
+import com.practice.concert_reservation_app.domain.reservation.application.GetReservationService
+import com.practice.concert_reservation_app.domain.user.application.UserMyInfoService
 import com.practice.concert_reservation_app.domain.user.application.UserSignInService
 import com.practice.concert_reservation_app.domain.user.application.UserSignUpService
 import com.practice.concert_reservation_app.domain.user.domain.User
@@ -19,10 +19,10 @@ import javax.validation.Valid
 @RestController
 @RequestMapping("api/v1/user")
 class UserController(
-    @Autowired private val userSignUpService: UserSignUpService,
-    @Autowired private val userSignInService: UserSignInService,
-    @Autowired private val userMyPageService: UserMyPageService,
-    @Autowired private val reservationService: ReservationService
+        @Autowired private val userSignUpService: UserSignUpService,
+        @Autowired private val userSignInService: UserSignInService,
+        @Autowired private val userMyInfoService: UserMyInfoService,
+        @Autowired private val getReservationService: GetReservationService
 ) {
     @PostMapping("/register")
     fun register(@RequestBody @Valid signUpReq: SignUpDto.SignUpReq): ResponseEntity<User> {
@@ -38,8 +38,8 @@ class UserController(
 
     @GetMapping("/my_page")
     fun myPage(@AuthenticationPrincipal userDetails: UserDetails): ResponseEntity<MyPageDto.MyPageResult> {
-        val userInfo = userMyPageService.myInfo(userDetails.username)
-        val reservationInfo = reservationService.getReservationsByUser(userDetails.username)
+        val userInfo = userMyInfoService.myInfo(userDetails.username)
+        val reservationInfo = getReservationService.getReservationsByUser(userDetails.username)
 
         val myPageResult = MyPageDto.MyPageResult(userInfo, reservationInfo)
         return ResponseEntity(myPageResult, HttpStatus.OK)
