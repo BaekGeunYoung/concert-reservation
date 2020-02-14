@@ -5,5 +5,5 @@ import com.practice.concert_reservation_app.domain.reservation.domain.Reservatio
 interface HandleReservationService {
     fun cancelReservation(concertId: Long, seatNumber: Int, username: String)
 
-    fun modifyReservation(concertId: Long, seatNumber: Int, username: String): Reservation
+    fun modifyReservation(concertId: Long, seatNumber: Int, newSeatNumber: Int, username: String): Reservation
 }

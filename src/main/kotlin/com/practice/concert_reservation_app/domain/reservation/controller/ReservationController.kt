@@ -21,7 +21,7 @@ class ReservationController(
     @GetMapping("/concerts/{concertId}")
     fun getReservations(
             @PathVariable("concertId") concertId: Long
-    ): ResponseEntity<Set<Reservation>> {
+    ): ResponseEntity<List<Reservation>> {
         val reservations = getReservationService.getReservationsByConcert(concertId)
         return ResponseEntity(reservations, HttpStatus.OK)
     }
@@ -50,9 +50,10 @@ class ReservationController(
     fun modifyReservation(
             @PathVariable("concertId") concertId: Long,
             @PathVariable("seatNumber") seatNumber: Int,
+            @RequestBody newSeatNumber: Int,
             @AuthenticationPrincipal userDetails: UserDetails
     ): ResponseEntity<Reservation> {
-        val modifiedReservation = handleReservationService.modifyReservation(concertId, seatNumber, userDetails.username)
+        val modifiedReservation = handleReservationService.modifyReservation(concertId, seatNumber, newSeatNumber, userDetails.username)
         return ResponseEntity(modifiedReservation, HttpStatus.OK)
     }
 }
