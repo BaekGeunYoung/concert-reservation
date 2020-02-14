@@ -35,7 +35,7 @@ class UserController(
     @GetMapping("/my_page")
     fun myPage(@AuthenticationPrincipal userDetails: UserDetails): ResponseEntity<MyPageDto.MyPageResult> {
         val userInfo = userService.myInfo(userDetails.username)
-        val reservationInfo = reservationService.getReservationInfo(userInfo.id!!)
+        val reservationInfo = reservationService.getReservationsByUser(userDetails.username)
 
         val myPageResult = MyPageDto.MyPageResult(userInfo, reservationInfo)
         return ResponseEntity(myPageResult, HttpStatus.OK)

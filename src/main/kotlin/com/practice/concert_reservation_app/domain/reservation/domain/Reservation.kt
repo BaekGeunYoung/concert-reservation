@@ -6,11 +6,11 @@ import javax.persistence.Id
 @Entity
 data class Reservation(
         @Id
-        var userId: Long,
+        var username: String,
         @Id
         var concertId: Long,
         @Id
         var seatNumber: Int
 ) {
-    constructor() : this(userId = 0, concertId = 0, seatNumber = 0)
+    constructor() : this(username = "", concertId = 0, seatNumber = 0)
 }
