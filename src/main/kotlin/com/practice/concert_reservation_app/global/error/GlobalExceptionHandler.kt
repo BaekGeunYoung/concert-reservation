@@ -5,6 +5,7 @@ import com.practice.concert_reservation_app.domain.reservation.exception.Invalid
 import com.practice.concert_reservation_app.domain.reservation.exception.ReservationNotFoundException
 import com.practice.concert_reservation_app.domain.reservation.exception.SeatAlreadyTakenException
 import com.practice.concert_reservation_app.domain.user.exception.DuplicateUsernameException
+import com.practice.concert_reservation_app.global.exception.JwtValidationException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.AuthenticationException
@@ -76,5 +77,17 @@ class GlobalExceptionHandler {
         return ResponseEntity(errorResponse, HttpStatus.NOT_FOUND)
     }
 
+    @ExceptionHandler(JwtValidationException::class)
+    fun handle(error: JwtValidationException): ResponseEntity<ErrorResponse> {
+        val errorCode = ErrorCode.INVALID_JWT
+        var details = listOf<ErrorResponse.ErrorDetail>()
+        error.message?.let {
+            details = listOf(
+                    ErrorResponse.ErrorDetail(it)
+            )
+        }
+        val errorResponse = ErrorResponse.of(errorCode, details)
 
+        return ResponseEntity(errorResponse, HttpStatus.FORBIDDEN)
+    }
 }

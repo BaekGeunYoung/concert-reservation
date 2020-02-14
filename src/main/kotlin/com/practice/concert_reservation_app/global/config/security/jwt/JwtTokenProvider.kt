@@ -1,7 +1,8 @@
 package com.practice.concert_reservation_app.global.config.security.jwt
 
-import io.jsonwebtoken.*
+import com.practice.concert_reservation_app.global.exception.JwtValidationException
 import org.springframework.beans.factory.annotation.Autowired
+import io.jsonwebtoken.*
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
@@ -61,7 +62,7 @@ class JwtTokenProvider(
             if(claims.body.expiration.before(Date())) return false
             return true
         } catch (e: Exception) {
-            throw Exception()
+            throw JwtValidationException(e.message)
         }
     }
 }

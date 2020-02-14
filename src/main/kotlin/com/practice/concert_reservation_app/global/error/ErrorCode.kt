@@ -9,5 +9,6 @@ enum class ErrorCode(
     CONCERT_NOT_FOUND("CO_001", "cannot find concert."),
     INVALID_SEAT_NUMBER("CO_002", "invalid seat number."),
     SEAT_ALREADY_TAKEN("CO_003", "the seat is already taken."),
-    RESERVATION_NOT_FOUND("RE_001", "cabbit fubd reservation.")
+    RESERVATION_NOT_FOUND("RE_001", "cannot find reservation."),
+    INVALID_JWT("AU_001", "jwt validation failed.")
 }
