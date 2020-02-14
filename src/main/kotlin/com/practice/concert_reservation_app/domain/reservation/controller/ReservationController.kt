@@ -1,5 +1,7 @@
 package com.practice.concert_reservation_app.domain.reservation.controller
 
+import com.practice.concert_reservation_app.domain.reservation.application.GetReservationService
+import com.practice.concert_reservation_app.domain.reservation.application.HandleReservationService
 import com.practice.concert_reservation_app.domain.reservation.application.ReservationService
 import com.practice.concert_reservation_app.domain.reservation.domain.Reservation
 import org.springframework.beans.factory.annotation.Autowired
@@ -12,13 +14,15 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/api/v1/reservation")
 class ReservationController(
-        @Autowired val reservationService: ReservationService
+        @Autowired val reservationService: ReservationService,
+        @Autowired val getReservationService: GetReservationService,
+        @Autowired val handleReservationService: HandleReservationService
 ) {
     @GetMapping("/concerts/{concertId}")
     fun getReservations(
             @PathVariable("concertId") concertId: Long
     ): ResponseEntity<Set<Reservation>> {
-        val reservations = reservationService.getReservationsByConcert(concertId)
+        val reservations = getReservationService.getReservationsByConcert(concertId)
         return ResponseEntity(reservations, HttpStatus.OK)
     }
 
@@ -38,7 +42,7 @@ class ReservationController(
             @PathVariable("seatNumber") seatNumber: Int,
             @AuthenticationPrincipal userDetails: UserDetails
     ): ResponseEntity<Unit> {
-        reservationService.cancelReservation(concertId, seatNumber, userDetails.username)
+        handleReservationService.cancelReservation(concertId, seatNumber, userDetails.username)
         return ResponseEntity(HttpStatus.NO_CONTENT)
     }
 
@@ -48,7 +52,7 @@ class ReservationController(
             @PathVariable("seatNumber") seatNumber: Int,
             @AuthenticationPrincipal userDetails: UserDetails
     ): ResponseEntity<Reservation> {
-        val modifiedReservation = reservationService.modifyReservation(concertId, seatNumber, userDetails.username)
+        val modifiedReservation = handleReservationService.modifyReservation(concertId, seatNumber, userDetails.username)
         return ResponseEntity(modifiedReservation, HttpStatus.OK)
     }
 }
