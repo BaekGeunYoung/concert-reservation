@@ -6,6 +6,6 @@ import com.practice.concert_reservation_app.domain.user.domain.User
 class MyPageDto {
     data class MyPageResult(
             val userInfo: User,
-            val reservationInfo: Set<Reservation>
+            val reservationInfo: List<Reservation>
     )
 }

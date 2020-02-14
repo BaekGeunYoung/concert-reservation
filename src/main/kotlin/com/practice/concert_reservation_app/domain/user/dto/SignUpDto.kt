@@ -17,7 +17,7 @@ class SignUpDto {
                 password = bCryptPasswordEncoder.encode(password),
                 firstName = firstName,
                 lastName = lastName,
-                roles = mutableSetOf(Role.USER)
+                roles = mutableListOf(Role.USER)
         )
     }
 }

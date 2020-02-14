@@ -1,8 +1,10 @@
 package com.practice.concert_reservation_app.domain.user.domain
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import javax.persistence.*
 
 @Entity
+@JsonIgnoreProperties(value = ["password"])
 data class User(
         @Id @GeneratedValue
         var id: Long? = null,
