@@ -38,6 +38,7 @@ class SecurityConfig(
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .antMatchers("/api/v1/user/register").anonymous()
                 .antMatchers("/api/v1/user/login").anonymous()
+                .antMatchers("/api/v1/concerts").anonymous()
                 .anyRequest().authenticated()
                 .and()
                 .apply(JwtConfig(jwtTokenProvider))
