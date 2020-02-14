@@ -32,16 +32,20 @@
 - 회원가입
 - 로그인
 - 자신의 사용자 정보 조회
-- 공연 등록, 취소, 변경
+- 공연 정보 조회
 - 공연 예약, 취소, 변경
-- 공연 등록 현황 조회
-- 공연 예약 현황 조회
+- 공연에  예약 현황 조회
 
 ### api list (controller, UI layer)
-- /api/v1/user/register
-- /api/v1/user/login
-- /api/v1/user/me
-- /api/v1/concerts
-- /api/v1/concerts/{concertId}
-- /api/v1/concerts/{concertId}/seats
-- /api/v1/concerts/{concertId}/seats/{seatId}
+- POST /api/v1/user/register
+    - 회원가입
+- POST /api/v1/user/login
+    - 로그인
+- GET /api/v1/user/my_page
+    - 자신의 사용자 정보 조회
+- GET /api/v1/concerts
+    - 공연 정보 조회
+- POST /api/v1/reservation/concerts/{concertId}/seats/{seatNumber}
+    - 공연 예약, 취소, 변경
+- GET /api/v1/reservation/concerts/{concertId}
+    - 공연에 대한 예약 현황 조회
