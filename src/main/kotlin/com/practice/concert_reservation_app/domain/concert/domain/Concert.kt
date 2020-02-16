@@ -14,7 +14,7 @@ data class Concert(
 
         var endTime: LocalDateTime? = null,
 
-        @ElementCollection(fetch = FetchType.EAGER)
+        @OneToMany(targetEntity = Seat::class)
         var seats: MutableSet<Seat>? = null
 ) {
     constructor() : this(concertName = "")
@@ -29,12 +29,15 @@ data class Concert(
     fun canReserve(seatNumber: Int): Boolean {
         val targetSeat = seats!!.find { it.seatNumber == seatNumber }
 
-        return targetSeat!!.isTaken
+        return !targetSeat!!.isTaken
     }
 
     fun takeSeat(seatNumber: Int) {
-        val targetSeat = seats!!.find { it.seatNumber == seatNumber }
-        targetSeat!!.isTaken = true
+        seats!!.map {
+            if(it.seatNumber == seatNumber) {
+                it.isTaken = true
+            }
+        }
     }
 
     fun untakeSeat(seatNumber: Int) {
