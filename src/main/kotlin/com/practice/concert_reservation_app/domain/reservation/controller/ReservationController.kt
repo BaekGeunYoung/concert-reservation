@@ -23,14 +23,15 @@ class ReservationController(
         @Autowired val handleReservationService: HandleReservationService
 ) {
     private val logger: Logger = LoggerFactory.getLogger(ReservationController::class.java)
+    private val className: String = this::class.java.simpleName
 
     @GetMapping("/concerts/{concertId}")
     fun getReservations(
             @PathVariable("concertId") concertId: Long
     ): ResponseEntity<List<Reservation>> {
-        logger.info("ReservationController : getReservations - start")
+        logger.info("$className : ${Thread.currentThread().stackTrace[1].methodName} - start")
         val reservations = getReservationService.getReservationsByConcert(concertId)
-        logger.info("ReservationController : getReservations - end")
+        logger.info("$className : ${Thread.currentThread().stackTrace[1].methodName} - end")
         return ResponseEntity(reservations, HttpStatus.OK)
     }
 
@@ -40,9 +41,9 @@ class ReservationController(
             @PathVariable("seatNumber") seatNumber: Int,
             @AuthenticationPrincipal userDetails: UserDetails
     ): ResponseEntity<Reservation> {
-        logger.info("ReservationController : reserve - start")
+        logger.info("$className : ${Thread.currentThread().stackTrace[1].methodName} - start")
         val reservation = reservationService.reserve(concertId, seatNumber, userDetails.username)
-        logger.info("ReservationController : reserve - end")
+        logger.info("$className : ${Thread.currentThread().stackTrace[1].methodName} - end")
         return ResponseEntity(reservation, HttpStatus.CREATED)
     }
 
@@ -52,9 +53,9 @@ class ReservationController(
             @PathVariable("seatNumber") seatNumber: Int,
             @AuthenticationPrincipal userDetails: UserDetails
     ): ResponseEntity<Unit> {
-        logger.info("ReservationController : cancelReservation - start")
+        logger.info("$className : ${Thread.currentThread().stackTrace[1].methodName} - start")
         handleReservationService.cancelReservation(concertId, seatNumber, userDetails.username)
-        logger.info("ReservationController : cancelReservation - end")
+        logger.info("$className : ${Thread.currentThread().stackTrace[1].methodName} - end")
         return ResponseEntity(HttpStatus.NO_CONTENT)
     }
 
@@ -65,9 +66,9 @@ class ReservationController(
             @RequestBody @Valid modifyReq: ReservationDto.ModifyReq,
             @AuthenticationPrincipal userDetails: UserDetails
     ): ResponseEntity<Reservation> {
-        logger.info("ReservationController : modifyReservation - start")
+        logger.info("$className : ${Thread.currentThread().stackTrace[1].methodName} - start")
         val modifiedReservation = handleReservationService.modifyReservation(concertId, seatNumber, modifyReq.newSeatNumber, userDetails.username)
-        logger.info("ReservationController : modifyReservation - end")
+        logger.info("$className : ${Thread.currentThread().stackTrace[1].methodName} - end")
         return ResponseEntity(modifiedReservation, HttpStatus.OK)
     }
 }
