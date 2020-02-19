@@ -85,8 +85,7 @@ DDD에서는 이러한 '인프라스트럭쳐 주도 패키지화'를 지양해�
 위와 같은 디렉토리 구조는 컨텍스트 간 경계를 보다 확실히 나타내며, 개발 과정에서 타 컨텍스트와의 결합도를 느슨하게 만드는 데에도 집중할 수 있다고 생각한다.
 
 ### 2. Aggregate의 코드에서의 표현
-본 실습에서는 공연에 대한 정보를 담고 있는 Concert 객체와 공연 좌석 정보를 나타내는 Seat 객체가 밀접한 관련을 갖고 있다.
-Seat 객체는 Concert 객체에 무조건 종속적인 개념이고, Concert가 있음으로써 식별성을 부여받기 때문에 Seat 객체는 Concert를 root로 하는 aggregate의 구성원이 되어야 한다고 생각했다.
+본 실습에서는 공연에 대한 정보를 담고 있는 Concert 객체와 공연 좌석 정보를 나타내는 Seat 객체가 밀접한 관련을 갖고 있다. Seat 객체는 Concert 객체에 무조건 종속적인 개념이고, Concert가 있음으로써 식별성을 부여받기 때문에 Seat 객체는 Concert를 root로 하는 aggregate의 구성원이 되어야 한다고 생각했다.
 
 처음엔 `@embeddable`와 `@embedded` annotation을 이용해 관계를 정의하고 싶었는데, DB 쿼리가 의도하는 대로 작동하지 않아서 `@OneToMany` annotation을 이용했다.
 
@@ -132,8 +131,7 @@ Aggregate를 만들면서 신경썼던 점들은 아래와 같다.
 - 외부에서 aggregate로의 접근은 root를 통해서만 가능하다.
 
 ### 3. Service 네이밍
-도메인 주도 설계에서 Entity나 Value Object가 사람 혹은 사물을 표현한다면, Service는 entity와 value object에 포함되기에는 어색한 '행위'를 표현하기 위한 객체이다.
-그러한 태생적인 역할에 맞게 Service 객체는 도메인 모델과 1대1 대응이 되도록 작성하지 않고 해당 도메인 내에서 수행해야할 행위를 기반으로 세분화했다.
+도메인 주도 설계에서 Entity나 Value Object가 사람 혹은 사물을 표현한다면, Service는 entity와 value object에 포함되기에는 어색한 '행위'를 표현하기 위한 객체이다. 그러한 태생적인 역할에 맞게 Service 객체는 도메인 모델과 1대1 대응이 되도록 작성하지 않고 해당 도메인 내에서 수행해야할 행위를 기반으로 세분화했다.
 
 예를 들어 Concert 컨텍스트에 존재하는 Service를 단순히 ConcertService로 명명하고 세부 메서드를 모아놓지 않고, 아래와 같이 Service 객체를 세분화했다.
 ```
@@ -172,11 +170,9 @@ DDD에 따르면 Service 객체는 다음 예시와 같이 여러 layer에 존�
 
 본 실습에서는 도메인 layer에 위치시킬 만한 Service가 딱히 없기 때문에 application layer에만 Service를 두고 있다.
 
-처음 계획하기로는 Application layer에 위치하는 Service는 애플리케이션 사용자에게 제공하는 직접적인 기능들만을 담고 있도록 하려고 했다.
-하지만 개발 과정에서 타 컨텍스트의 기능을 필요로 하는 순간을 마주했다. 예를 들어, Reservation에 관한 service는 당연하게도 User 정보와 Concert 정보를 모두 필요로 하기 때문에 이 컨텍스트에 있는 기능을 주입받아야 했다.
+처음 계획하기로는 Application layer에 위치하는 Service는 애플리케이션 사용자에게 제공하는 직접적인 기능들만을 담고 있도록 하려고 했다. 하지만 개발 과정에서 타 컨텍스트의 기능을 필요로 하는 순간을 마주했다. 예를 들어, Reservation에 관한 service는 당연하게도 User 정보와 Concert 정보를 모두 필요로 하기 때문에 이 컨텍스트에 있는 기능을 주입받아야 했다.
 
-이런 경우 기능을 캡슐화하지 않은 채로 repository 등을 주입받아 기능을 직접 작성하는 것은 타 모듈과의 결합도를 높이고, 중복 코드의 발생 가능성을 높이기 때문에 지양해야 한다고 생각했으며, 따라서 이런 경우도 Service 객체를 만들어서
-exception 처리 등을 포함해 자체적으로 완전한 기능을 할 수 있는 객체를 주입시켜주기로 했다. 
+이런 경우 기능을 캡슐화하지 않은 채로 repository 등을 주입받아 기능을 직접 작성하는 것은 타 모듈과의 결합도를 높이고, 중복 코드의 발생 가능성을 높이기 때문에 지양해야 한다고 생각했다. 따라서 이런 경우도 Service 객체를 만들어서 exception 처리 등을 포함해 자체적으로 완전한 기능을 할 수 있는 객체를 주입시켜주기로 했다. 
 
 예시) `GetReservationServiceImpl.kt`
 ```kotlin
