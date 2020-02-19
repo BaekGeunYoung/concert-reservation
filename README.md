@@ -130,6 +130,8 @@ Aggregate를 만들면서 신경썼던 점들은 아래와 같다.
 - aggregate의 원소 entity의 business logic 및 invarinat는 모두 root aggregate에서 관리해야 한다.
 - 외부에서 aggregate로의 접근은 root를 통해서만 가능하다.
 
+한 가지 생각해봐야할 점은 원소 entity인 Seat 객체는 지역 식별성만을 가져도 충분한데, JPA에서 entity로 객체를 정의하기 위해서는 무조건 전역 식별성을 가져야 하기 때문에 이 둘 사이에 간극이 존재한다는 것이다. Aggregate를 JPA로 효과적으로 표현하는 방법에 대해 좀 더 공부를 해봐야겠다.
+
 ### 3. Service 네이밍
 도메인 주도 설계에서 Entity나 Value Object가 사람 혹은 사물을 표현한다면, Service는 entity와 value object에 포함되기에는 어색한 '행위'를 표현하기 위한 객체이다. 그러한 태생적인 역할에 맞게 Service 객체는 도메인 모델과 1대1 대응이 되도록 작성하지 않고 해당 도메인 내에서 수행해야할 행위를 기반으로 세분화했다.
 
