@@ -93,7 +93,7 @@ DDD에서는 이러한 '인프라스트럭쳐 주도 패키지화'를 지양해�
 ```kotlin
 @Entity
 data class Concert(
-        @Id @GeneratedValue
+        @Id @GeneratedValue(strategy=GenerationType.AUTO)
         var id: Long? = null,
 
         var concertName: String? = null,
